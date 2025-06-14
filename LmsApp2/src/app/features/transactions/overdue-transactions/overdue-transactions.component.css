@@ -1,0 +1,10 @@
+mat-card {
+  margin: 24px;
+}
+mat-table {
+  width: 100%;
+}
+.text-danger {
+  color: #d32f2f;
+  margin-top: 12px;
+}

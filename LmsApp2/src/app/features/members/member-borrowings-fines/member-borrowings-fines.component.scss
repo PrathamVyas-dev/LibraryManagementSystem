@@ -1,0 +1,130 @@
+// Summary cards
+.summary-card {
+  height: 100%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+  }
+  
+  .summary-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1a237e;
+  }
+  
+  .summary-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 4px;
+  }
+}
+
+// Tab content
+.tab-content {
+  min-height: 300px;
+}
+
+// Table styling
+.table {
+  thead th {
+    border-top: 0;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+.badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75rem;
+  
+  &.bg-success {
+    background-color: #28a745 !important;
+  }
+  
+  &.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+  }
+  
+  &.bg-danger {
+    background-color: #dc3545 !important;
+  }
+}
+
+// Responsive improvements
+@media (max-width: 767.98px) {
+  .summary-card {
+    margin-bottom: 1rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    
+    a.btn {
+      margin-top: 0.5rem;
+    }
+  }
+  
+  .table-responsive {
+    margin: 0 -16px;
+    
+    table {
+      margin-bottom: 0;
+    }
+  }
+  
+  .mat-button-toggle-group {
+    flex-wrap: wrap;
+  }
+  
+  .d-flex.flex-wrap {
+    justify-content: center;
+    
+    .ms-auto {
+      margin-left: 0 !important;
+      margin-top: 1rem;
+      width: 100%;
+      
+      .mat-form-field {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+// Material tab styling
+::ng-deep .mat-tab-group {
+  .mat-tab-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  .mat-tab-label {
+    height: 48px;
+    padding: 0 24px;
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.6);
+    
+    &.mat-tab-label-active {
+      color: #1a237e;
+      opacity: 1;
+    }
+  }
+  
+  .mat-ink-bar {
+    background-color: #1a237e !important;
+    height: 3px;
+  }
+}
+
+// Button styling
+.btn-sm {
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+}

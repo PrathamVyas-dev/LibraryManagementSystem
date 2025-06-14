@@ -1,0 +1,206 @@
+<div class="container mt-4">
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger d-flex align-items-center mb-4">
+    <i class="pi pi-exclamation-triangle me-2"></i>
+    <div>{{ error }}</div>
+  </div>
+  
+  <div class="card shadow mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 text-primary" *ngIf="member">
+        <i class="pi pi-book me-2"></i>{{ member.name }}'s Borrowings & Fines
+      </h5>
+      <a routerLink="/members" class="btn btn-outline-secondary">
+        <i class="pi pi-arrow-left me-2"></i>Back to Members
+      </a>
+    </div>
+    
+    <div class="card-body">
+      <!-- Loading Indicator -->
+      <div *ngIf="!member" class="text-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-muted">Loading member data...</p>
+      </div>
+      
+      <div *ngIf="member">
+        <!-- Stats Summary Cards -->
+        <div class="row mb-4">
+          <div class="col-md-3 mb-3 mb-md-0">
+            <div class="summary-card text-center p-3 border rounded">
+              <div class="summary-value">{{ borrowings.length }}</div>
+              <div class="summary-label">Total Borrowings</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <div class="summary-card text-center p-3 border rounded">
+              <div class="summary-value">{{ getActiveBorrowingsCount() }}</div>
+              <div class="summary-label">Active Borrowings</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <div class="summary-card text-center p-3 border rounded">
+              <div class="summary-value">{{ getOverdueCount() }}</div>
+              <div class="summary-label">Overdue Items</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="summary-card text-center p-3 border rounded">
+              <div class="summary-value">₹{{ getTotalFines() }}</div>
+              <div class="summary-label">Total Fines</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tabs for Borrowings and Fines -->
+        <mat-tab-group animationDuration="300ms">
+          <!-- Borrowings Tab -->
+          <mat-tab label="Borrowings">
+            <div class="tab-content p-3">
+              <div *ngIf="loadingBorrowings" class="text-center p-3">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading borrowings...</p>
+              </div>
+              
+              <div *ngIf="!loadingBorrowings">
+                <!-- Borrowings Filter -->
+                <div class="mb-4">
+                  <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <mat-button-toggle-group [(value)]="borrowingFilter" (change)="applyBorrowingFilter()">
+                      <mat-button-toggle value="all">All</mat-button-toggle>
+                      <mat-button-toggle value="active">Active</mat-button-toggle>
+                      <mat-button-toggle value="overdue">Overdue</mat-button-toggle>
+                      <mat-button-toggle value="returned">Returned</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    
+                    <div class="ms-auto">
+                      <mat-form-field appearance="outline" style="width: 200px">
+                        <mat-label>Search Books</mat-label>
+                        <input matInput [(ngModel)]="borrowingSearchTerm" (keyup)="applyBorrowingFilter()" placeholder="Search by title">
+                        <mat-icon matSuffix>search</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Borrowings Table -->
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>Book</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th *ngIf="canReturnBooks()">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let b of filteredBorrowings" [ngClass]="{'table-danger': isOverdue(b)}">
+                        <td>{{ b.bookName }}</td>
+                        <td>{{ formatDate(b.borrowDate) }}</td>
+                        <td>{{ formatDate(b.returnDate) }}</td>
+                        <td>{{ b.returnDate && b.status === 'Returned' ? formatDate(b.returnDate) : 'Not returned' }}</td>
+                        <td>
+                          <span class="badge" [ngClass]="getStatusClass(b)">
+                            {{ getDisplayStatus(b) }}
+                          </span>
+                        </td>
+                        <td *ngIf="canReturnBooks()">
+                          <button *ngIf="b.status !== 'Returned'" 
+                                  mat-raised-button 
+                                  color="accent" 
+                                  class="btn-sm" 
+                                  (click)="returnBook(b.transactionID)">
+                            Return
+                          </button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="filteredBorrowings.length === 0">
+                        <td colspan="6" class="text-center py-3 text-muted">
+                          <i class="pi pi-info-circle me-2"></i>
+                          No borrowings found.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          
+          <!-- Fines Tab -->
+          <mat-tab label="Fines">
+            <div class="tab-content p-3">
+              <div *ngIf="loadingFines" class="text-center p-3">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading fines...</p>
+              </div>
+              
+              <div *ngIf="!loadingFines">
+                <!-- Fines Filter -->
+                <div class="mb-4">
+                  <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <mat-button-toggle-group [(value)]="fineFilter" (change)="applyFineFilter()">
+                      <mat-button-toggle value="all">All</mat-button-toggle>
+                      <mat-button-toggle value="unpaid">Unpaid</mat-button-toggle>
+                      <mat-button-toggle value="paid">Paid</mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </div>
+                
+                <!-- Fines Table -->
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>Fine ID</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th *ngIf="canManageFines()">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let f of filteredFines">
+                        <td>{{ f.fineID }}</td>
+                        <td>₹{{ f.amount }}</td>
+                        <td>
+                          <span class="badge" [ngClass]="f.status === 'Paid' ? 'bg-success' : 'bg-danger'">
+                            {{ f.status }}
+                          </span>
+                        </td>
+                        <td>{{ formatDate(f.transactionDate) }}</td>
+                        <td *ngIf="canManageFines()">
+                          <button *ngIf="f.status !== 'Paid' && f.status === 'Pending'" 
+                                  mat-raised-button 
+                                  color="primary" 
+                                  class="btn-sm"
+                                  (click)="payFine(f.fineID)">
+                            Mark as Paid
+                          </button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="filteredFines.length === 0">
+                        <td colspan="5" class="text-center py-3 text-muted">
+                          <i class="pi pi-info-circle me-2"></i>
+                          No fines found.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

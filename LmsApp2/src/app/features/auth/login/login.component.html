@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Library Management System - Login</h4>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Improved error alert with animation and dismiss button -->
+            <div class="error-alert fade-in" *ngIf="error" role="alert" aria-live="assertive">
+              <i class="pi pi-exclamation-circle me-2"></i>
+              <span>{{ error }}</span>
+              <button type="button" class="btn-close" aria-label="Close" (click)="error = null"></button>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="pi pi-envelope"></i>
+                </span>
+                <input 
+                  type="email" 
+                  formControlName="email" 
+                  class="form-control" 
+                  id="email" 
+                  placeholder="Enter your email"
+                  [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+                />
+              </div>
+              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback d-block">
+                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                <div *ngIf="f['email'].errors['email']">Please enter a valid email address</div>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="pi pi-lock"></i>
+                </span>
+                <input 
+                  type="password" 
+                  formControlName="password" 
+                  class="form-control" 
+                  id="password" 
+                  placeholder="Enter your password"
+                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                />
+              </div>
+              <div *ngIf="submitted && f['password'].errors" class="invalid-feedback d-block">
+                <div *ngIf="f['password'].errors['required']">Password is required</div>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+              <button [disabled]="loading" type="submit" class="btn btn-primary btn-lg">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!loading" class="pi pi-sign-in me-2"></i>
+                Login
+              </button>
+            </div>
+            
+            <div class="text-center mt-3">
+              <p>Don't have an account? <a routerLink="/register" class="text-primary">Register here</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

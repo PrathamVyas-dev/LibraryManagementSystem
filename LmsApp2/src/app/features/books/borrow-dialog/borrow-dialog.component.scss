@@ -1,0 +1,15 @@
+mat-dialog-content {
+  min-height: 80px;
+  
+  p {
+    margin-bottom: 8px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0;
+}

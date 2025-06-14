@@ -1,0 +1,118 @@
+<div class="container mt-4">
+  <div class="card shadow mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 text-primary" *ngIf="transaction">
+        <i class="pi pi-info-circle me-2"></i>Transaction #{{ transaction.transactionID }}
+      </h5>
+      <a routerLink="/transactions" class="btn btn-outline-secondary">
+        <i class="pi pi-arrow-left me-2"></i>Back to Transactions
+      </a>
+    </div>
+    
+    <div class="card-body">
+      <!-- Loading Indicator -->
+      <div *ngIf="loading" class="text-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-muted">Loading transaction details...</p>
+      </div>
+      
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-danger d-flex align-items-center">
+        <i class="pi pi-exclamation-triangle me-2"></i>
+        <div>{{ error }}</div>
+      </div>
+      
+      <!-- Transaction Details -->
+      <div *ngIf="transaction && !loading" class="transaction-details">
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-muted mb-3">Book Information</h6>
+            <div class="detail-item">
+              <span class="label">Book:</span>
+              <span class="value">{{ transaction.bookName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Book ID:</span>
+              <span class="value">{{ transaction.bookID }}</span>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h6 class="text-muted mb-3">Member Information</h6>
+            <div class="detail-item">
+              <span class="label">Member:</span>
+              <span class="value">{{ transaction.memberName || 'ID: ' + transaction.memberID }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <hr class="my-4">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-muted mb-3">Transaction Dates</h6>
+            <div class="detail-item">
+              <span class="label">Borrow Date:</span>
+              <span class="value">{{ formatDate(transaction.borrowDate) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Due Date:</span>
+              <span class="value">{{ formatDate(transaction.dueDate) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Return Date:</span>
+              <span class="value">
+                {{ transaction.returnDate ? formatDate(transaction.returnDate) : 'Not returned' }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h6 class="text-muted mb-3">Status</h6>
+            <div class="detail-item">
+              <span class="label">Status:</span>
+              <span class="value">
+                <span class="status-badge" [ngClass]="{
+                  'bg-success': transaction.status === 'Returned',
+                  'bg-warning text-dark': transaction.status === 'Borrowed',
+                  'bg-danger': transaction.status === 'Overdue'
+                }">
+                  {{ transaction.status }}
+                </span>
+              </span>
+            </div>
+            
+            <div *ngIf="transaction.status === 'Overdue' || 
+                      (transaction.status === 'Borrowed' && isOverdue(transaction))" 
+                 class="detail-item mt-3">
+              <div class="alert alert-danger">
+                <strong>Overdue Notice:</strong> This book is overdue by 
+                {{ calculateOverdueDays(transaction) }} days.
+                <div *ngIf="calculatePotentialFine(transaction) > 0" class="mt-2">
+                  Potential fine: ₹{{ calculatePotentialFine(transaction) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button *ngIf="transaction.status !== 'Returned' && (isAdmin() || isLibrarian())" 
+                  class="btn btn-success" 
+                  (click)="returnBook()">
+            <i class="pi pi-arrow-circle-left me-2"></i>Return Book
+          </button>
+          
+          <button *ngIf="canDelete()" 
+                  class="btn btn-danger"
+                  (click)="delete()">
+            <i class="pi pi-trash me-2"></i>Delete Transaction
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

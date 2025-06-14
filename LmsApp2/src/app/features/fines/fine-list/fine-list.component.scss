@@ -1,0 +1,305 @@
+// Status badge styles
+.status-badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  
+  &.status-paid {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  &.status-pending {
+    background-color: #ffc107;
+    color: #212529;
+  }
+}
+
+// Highlight pending fines
+.pending-row {
+  background-color: rgba(255, 193, 7, 0.05);
+  
+  &:hover {
+    background-color: rgba(255, 193, 7, 0.1);
+  }
+}
+
+// Column widths
+.mat-column-actions {
+  width: 120px;
+  text-align: right;
+}
+
+.mat-column-fineID {
+  width: 70px;
+}
+
+.mat-column-status {
+  width: 100px;
+}
+
+.mat-column-amount {
+  width: 100px;
+  text-align: right;
+}
+
+// Dashboard summary cards
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  .text-xs {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  .icon-circle {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+// Table styling
+.table {
+  margin-bottom: 0;
+  
+  th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  
+  .mat-table {
+    min-width: 800px;
+  }
+}
+
+// Filter form styling
+.mat-form-field {
+  margin-bottom: 0;
+}
+
+// Form styling
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+// Better alignment for buttons
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// Button styling
+.btn-primary {
+  background-color: #1a237e;
+  border-color: #1a237e;
+  
+  &:hover {
+    background-color: #151c5f;
+    border-color: #151c5f;
+  }
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+  
+  &:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+// Pagination styling
+.mat-paginator {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+// Animation for refresh button
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-outline-primary:active .pi-refresh {
+  animation: spin 0.5s linear;
+}
+
+// Report panel styling
+.report-panel {
+  transition: all 0.3s ease;
+  
+  .card-header {
+    background-color: #17a2b8 !important;
+  }
+  
+  .btn-close-white {
+    filter: brightness(0) invert(1);
+  }
+  
+  .chart-placeholder {
+    height: 200px;
+    border: 2px dashed #dee2e6;
+    border-radius: 0.25rem;
+  }
+}
+
+.report-preview {
+  border-top: 1px dashed #dee2e6;
+  padding-top: 1.5rem;
+  
+  .table th {
+    width: 40%;
+  }
+}
+
+// Dashboard cards
+.bg-primary {
+  background-color: #1a237e !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+// Responsive layout
+@media (max-width: 767.98px) {
+  .d-flex.gap-1 {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    
+    button {
+      width: 100%;
+    }
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  // Adjust spacing for mobile
+  .container.mt-4 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+// Enhanced focus styles for accessibility
+button:focus, 
+a:focus {
+  outline: 2px solid #1a237e;
+  outline-offset: 2px;
+}
+
+// Error snackbar styling
+::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+// Print styles
+@media print {
+  .action-buttons, 
+  .card-header button,
+  form,
+  .mat-paginator,
+  .filter-section,
+  .btn {
+    display: none !important;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .report-preview,
+  .card,
+  .card-body {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .report-preview h6,
+  .report-section h6 {
+    border-bottom: 1px solid #000 !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .table {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    border-collapse: collapse !important;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.5rem !important;
+    border: 1px solid #dee2e6 !important;
+  }
+}

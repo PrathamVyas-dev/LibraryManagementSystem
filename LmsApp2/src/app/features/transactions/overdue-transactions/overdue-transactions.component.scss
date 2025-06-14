@@ -1,0 +1,86 @@
+.mat-column-transactionID {
+  width: 80px;
+}
+
+.mat-column-overdueDays,
+.mat-column-potentialFine {
+  width: 120px;
+  text-align: center;
+}
+
+.mat-column-actions {
+  width: 100px;
+  text-align: center;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+// Overdue days severity styling
+.mild-overdue {
+  color: #f57c00; // Orange
+}
+
+.moderate-overdue {
+  color: #e53935; // Red
+  font-weight: 500;
+}
+
+.severe-overdue {
+  color: #b71c1c; // Dark red
+  font-weight: 700;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Card and table styling
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+// Responsive improvements
+@media (max-width: 767.98px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    
+    a {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+  }
+  
+  .mat-table {
+    min-width: 800px;
+  }
+}
+
+// Make badges stand out more
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+  padding: 0.4em 0.6em;
+  font-size: 0.8rem;
+}

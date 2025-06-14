@@ -1,0 +1,192 @@
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+
+  .card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}
+
+// Status badges
+.badge {
+  padding: 0.5em 0.75em;
+  font-weight: 500;
+  border-radius: 0.25rem;
+}
+
+.bg-primary {
+  background-color: #1a237e !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+.bg-active {
+  background-color: #4caf50;
+}
+
+.bg-returned {
+  background-color: #607d8b;
+}
+
+.bg-overdue {
+  background-color: #f44336;
+}
+
+// Table styling
+.table {
+  margin-bottom: 0;
+
+  th {
+    border-top: none;
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.detail-item {
+  margin-bottom: 8px;
+
+  .label {
+    font-weight: 500;
+    width: 120px;
+    display: inline-block;
+  }
+}
+
+// Form styling
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-check-label {
+  color: #495057;
+}
+
+.form-check-input:checked {
+  background-color: #1a237e;
+  border-color: #1a237e;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #1a237e;
+  box-shadow: 0 0 0 0.25rem rgba(26, 35, 126, 0.25);
+}
+
+// Button styling
+.btn-primary {
+  background-color: #1a237e;
+  border-color: #1a237e;
+
+  &:hover {
+    background-color: #151c5f;
+    border-color: #151c5f;
+  }
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+
+  &:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: #fff;
+
+  &:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+  }
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+}
+
+// Member info panel
+.member-info {
+  border-left: 4px solid #3f51b5;
+  padding-left: 15px;
+}
+
+// Filter panel
+.filter-panel .card {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+
+    button {
+      margin-top: 10px;
+      align-self: flex-end;
+    }
+  }
+
+  .input-group {
+    flex-direction: column;
+
+    .form-select, .form-control {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      border-radius: 0.25rem !important;
+    }
+  }
+}
